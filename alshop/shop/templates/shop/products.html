@@ -1,0 +1,139 @@
+{%load static%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web Shop - Products</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <style>
+        .product-card {
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 20px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .product-card img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 5px;
+        }
+        .product-card h3 {
+            font-size: 1.2rem;
+            margin-top: 15px;
+        }
+        .product-card p {
+            font-size: 1rem;
+            margin-top: 10px;
+        }
+        .product-card .price {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+  <!-- Header -->
+  <header>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <a class="navbar-brand" href="/">Web Shop</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="/">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/products">Products</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/contact">Contact</a>
+          </li>
+        </ul>
+        <ul class="navbar-nav">
+          {% if user.is_authenticated %}
+          <li class="nav-item">
+            <a class="nav-link" href="#">Welcome, {{ user.username }}!</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/accounts/logout/">Logout</a>
+          </li>
+          {% else %}
+          <li class="nav-item">
+            <a class="nav-link" href="/login/">Login</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/register/">Register</a>
+          </li>
+          {% endif %}
+        </ul>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Main Content -->
+  <main class="container">
+    <h1 class="my-4">Products</h1>
+
+    <div class="row">
+        <!-- Men's Products -->
+        <div class="col-md-6">
+            <h2>Men's Products</h2>
+            <div class="row">
+                {% for product in men_products %}
+                <div class="col-md-4">
+                    <div class="product-card">
+                        {% if product.photo %}
+                            <img src="{{ product.photo.url }}" alt="{{ product.title }}">
+                        {% else %}
+                            <img src="{% static 'images/placeholder.png' %}" alt="No image available">
+                        {% endif %}
+                        <h3>{{ product.title }}</h3>
+                        <p>Category: {{ product.category }}</p>
+                        <p class="price">${{ product.price }}</p>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- Women's Products -->
+        <div class="col-md-6">
+            <h2>Women's Products</h2>
+            <div class="row">
+                {% for product in women_products %}
+                <div class="col-md-4">
+                    <div class="product-card">
+                        {% if product.photo %}
+                            <img src="{{ product.photo.url }}" alt="{{ product.title }}">
+                        {% else %}
+                            <img src="{% static 'images/placeholder.png' %}" alt="No image available">
+                        {% endif %}
+                        <h3>{{ product.title }}</h3>
+                        <p>Category: {{ product.category }}</p>
+                        <p class="price">${{ product.price }}</p>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer mt-auto py-3 bg-light">
+    <div class="container">
+      <span class="text-muted">Copyright &copy; 2023 Web Shop. All rights reserved.</span>
+    </div>
+  </footer>
+
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</body>
+</html>
+
